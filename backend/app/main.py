@@ -1,4 +1,5 @@
 import os
+import random
 import openai
 import shutil
 from llama_index import (
@@ -6,7 +7,16 @@ from llama_index import (
     SimpleDirectoryReader,
     load_index_from_storage,
     StorageContext,
+    ServiceContext,
+    set_global_service_context,
 )
+from llama_index.llms import OpenAI
+from llama_index.node_parser import SimpleNodeParser
+from llama_index.node_parser.extractors import (
+    QuestionsAnsweredExtractor,
+    MetadataExtractor,
+)
+from llama_index.text_splitter import TokenTextSplitter
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from metaphor_python import Metaphor
@@ -27,6 +37,27 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 metaphor = Metaphor(os.getenv("METAPHOR_API_KEY"))
 
 id_to_context_mapping = {}
+nodes = []
+
+llm = OpenAI(temperature=0.1, model="gpt-3.5-turbo")
+service_context = ServiceContext.from_defaults(llm=llm)
+set_global_service_context(service_context)
+
+
+def generate_query_questions(path: str) -> list:
+    text_splitter = TokenTextSplitter(separator=" ", chunk_size=512, chunk_overlap=128)
+    metadata_extractor = MetadataExtractor(
+        extractors=[QuestionsAnsweredExtractor(questions=3, llm=llm)]
+    )
+
+    node_parser = SimpleNodeParser(
+        text_splitter=text_splitter, metadata_extractor=metadata_extractor
+    )
+
+    documents = SimpleDirectoryReader(path).load_data()
+    nodes = node_parser.get_nodes_from_documents(documents)
+
+    return nodes
 
 
 def create_txt_files(file_contents, output_directory):
@@ -82,7 +113,9 @@ def get_source_url(response: object) -> str:
 def indexing_documents():
     flash_directory = "app/flash_storage"
     documents = SimpleDirectoryReader("app/data").load_data()
-    index = VectorStoreIndex.from_documents(documents, show_progress=True)
+    index = VectorStoreIndex.from_documents(
+        documents, service_context=service_context, show_progress=True
+    )
     index.storage_context.persist(persist_dir=flash_directory)
 
 
@@ -103,8 +136,20 @@ def creating_content_files(ids: list) -> bool:
 
 
 @app.get("/api/internet-search")
-async def get_internet_data(query: str):
+async def get_internet_data(
+    query: str,
+    num_results: int = 20,
+    start_published_date: str = "2021-01-01",
+    include_domains: list = [
+        "https://hashnode.com/",
+        "https://medium.com/",
+        "https://dev.to/",
+    ],
+):
     global id_to_context_mapping
+    global nodes
+
+    nodes = []
     id_to_context_mapping = {}
 
     empty_directory("app/flash_storage")
@@ -122,13 +167,9 @@ async def get_internet_data(query: str):
     search_response = metaphor.search(
         metaphor_query,
         use_autoprompt=True,
-        include_domains=[
-            "https://hashnode.com/",
-            "https://medium.com/",
-            "https://dev.to/",
-        ],
-        start_published_date="2021-01-01",
-        num_results=20,
+        include_domains=include_domains,
+        start_published_date=start_published_date,
+        num_results=num_results,
     )
     ids = id_generation(search_response)
 
@@ -158,6 +199,22 @@ async def retrieve_response(query: str):
         "message": "Operation completed successfully",
         "data": {"response": response.response, "source": source_url},
     }
+
+
+@app.get("/api/generate-questions")
+async def generate_questions():
+    global nodes
+    data_directory = "app/data"
+
+    if len(nodes) == 0:
+        nodes = generate_query_questions(data_directory)
+
+    random_number = random.randint(0, len(nodes) - 1)
+
+    questions = nodes[random_number].metadata["questions_this_excerpt_can_answer"]
+    questions_array = questions.split("\n")
+
+    return {"questions": questions_array}
 
 
 @app.get("/")
