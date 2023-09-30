@@ -8,9 +8,20 @@ from llama_index import (
     StorageContext,
 )
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from metaphor_python import Metaphor
 
 app = FastAPI(docs_url="/api/docs", openapi_url="/api/openapi.json")
+
+origins = ["http://localhost:3000"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 metaphor = Metaphor(os.getenv("METAPHOR_API_KEY"))
@@ -93,6 +104,9 @@ def creating_content_files(ids: list) -> bool:
 
 @app.get("/api/internet-search")
 async def get_internet_data(query: str):
+    global id_to_context_mapping
+    id_to_context_mapping = {}
+
     empty_directory("app/flash_storage")
     USER_QUESTION = query
     SYSTEM_MESSAGE = "You are a helpful assistant that generates advanced queries based on user questions. Only generate one search query."
