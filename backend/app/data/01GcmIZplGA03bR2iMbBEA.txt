@@ -1,0 +1,56 @@
+React state management: What is it and why to use it? | LoginRadius Blog<div><div><p>Biggest Challenge in React application is the management of state for frontend developers. In large applications, React alone is not sufficient to handle the complexity which is why some developers use React hooks and others use state management libraries such as Redux.</p>
+<p>In this post, We are going to take a closer look at both React hooks and Redux to manage the state.</p>
+<h2><a href="#what-is-react-state-management"></a>What is React State Management?</h2>
+<p>React components have a built-in state object. The state is encapsulated data where you store assets that are persistent between component renderings.</p>
+<p>The state is just a fancy term for a JavaScript data structure. If a user changes state by interacting with your application, the UI may look completely different afterwards, because it's represented by this new state rather than the old state.</p>
+<blockquote>
+<p><strong>Make a state variable responsible for one concern to use efficiently</strong>.</p>
+</blockquote>
+<h2><a href="#why-do-you-need-react-state-management"></a>Why do you need React state management?</h2>
+<p>React applications are built using components and they manage their state internally and it works well for applications with few components, but when the application grows bigger, the complexity of managing states shared across components becomes difficult.</p>
+<p>Here is a simple example of an e-commerce application, in which the status of multiple components will change when purchasing a product.</p>
+<ul>
+<li>Add that product to the shopping list</li>
+<li>Add product to customer history</li>
+<li>trigger count of purchased products</li>
+</ul>
+<p>If developers do not have scalability in mind then it is really hard to find out what is happening when something goes wrong. This is why you need state management in your application.</p>
+<p>Let’s discuss how to use react state management using react hooks and redux</p>
+<h2><a href="#what-is-redux"></a>What is Redux?</h2>
+<p>Redux was created to resolve this particular issue. it provides a central store that holds all states of your application. Each component can access the stored state without sending it from one component to another. Here is a simple view of how Redux works.</p>
+<p>
+ <a href="/static/878d2cde053633bfea88a8bfcfc28e89/29007/image1.png">
+ 
+ 
+ </a>
+ </p>
+<p>There are three building parts: actions, store, and reducers. Let’s briefly discuss what each of them does.</p>
+<h4><a href="#actions-in-redux"></a>Actions in Redux</h4>
+<p>Actions are payloads of information that send data from your application to your store. Actions are sent using <a href="https://redux.js.org/api/store#dispatchaction"><code>store.dispatch()</code></a>. Actions are created via an action creator.
+Here is an example action that represents adding a new todo item:</p>
+<pre><code>{ 
+type: "ADD_TODO", 
+payload: {text:"Hello Foo"}
+ }</code></pre>
+<p>Here is an example of its action creator:</p>
+<pre><code>ocnst addTodo = (text) =&gt; {
+ return {
+ type: "ADD_TODO",
+ text
+ };
+}</code></pre>
+<h4><a href="#reducers-in-redux"></a>Reducers in Redux</h4>
+<p>Reducers specify how the application's state changes in response to actions sent to the store.
+An example of how Reducer works in Redux is as follows:</p>
+<pre><code> const TODOReducer= (state = {}, action) =&gt; {
+ switch (action.type) {
+ case "ADD_TODO":
+ return {
+ ...state,
+ ...action.payload
+ };
+ default:
+ return state;
+ }
+};</code></pre>
+<h4
