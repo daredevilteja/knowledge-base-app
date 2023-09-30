@@ -1,0 +1,26 @@
+Suspense in React 18: How it works, and how you can use it<div><div>
+<p>React 18, also known as the Concurrent React, released earlier this year and brought with it important changes. The most impactful one is the new concurrent rendering engine, which is what the new Concurrent Rendering feature “Suspense” is based on. If your React apps work with any asynchronous data sources (like REST services), using Suspense will not only make your apps easier to program, but those apps will also perform much better for your users.<br />
+</p>
+<p>In this article, we explain the basics of what Suspense is, as well as make clear what is currently supported in React 18, as well as what’s not ready yet for production.<br />
+</p>
+<h2>What is Suspense, and Do I Need It?<br />
+</h2>
+<p>Suspense is the first feature released by the Facebook React team that takes advantage of the new concurrent rendering engine built into React 18. It allows you to build apps with more responsive UIs that use less browser resources. It also gives developers and designers a more intuitive API to work with.</p>
+<p>Suspense has been in the making for over three years, and it fundamentally changes how React determines what to render on a web page, based on your app’s component state changes. If your React app data (aka state data) changes - and these changes do not require a full page rerender from the server - the React rendering engine does the necessary updates to the UI.</p>
+<p>An example of the difference between <a href="https://17.reactjs.org/docs/concurrent-mode-intro.html">Concurrent React</a>, rendering a page, and the React rendering engine prior is what happens when a web page updates a list based on some interruption (like typing in a text box that is used as a filter item on a list). </p>
+<p>Without Concurrent Rendering, it's possible that many of the items in the list will get updated by React. This makes the page feel sluggish to the user, and the browser uses a lot of computer resources to make the app work at all. </p>
+<p>If your browser allows you to view the animated gif below, this is what you might see.</p>
+</div><div>
+<p>If, on the same computer, you were using an app that implemented Concurrent Rendering — meaning that as the user typed into the search box, only what was necessary in the DOM was updated — you might see a UI that performs like the one below.</p>
+</div><div>
+<h2>How Suspense Changes How You Implement Showing Data</h2>
+<h3>Without Suspense</h3>
+<p>Let's assume you have some kind of external data source such as a remote web service, or even just data from a <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> Server. Without using Suspense and Concurrent Rendering — which, by the way, is still an option in React 18 — you’d programmatically fetch the data, then check some data loading state, and finally, when that loading state indicates the data is fully retrieved, show the data in the UI. </p>
+<p>Your app code probably looks something like this:</p>
+</div><div>
+<h3>With Suspense</h3>
+<p>If you were to do the same thing with React 18 Suspense using Concurrent Rendering, you’d do things a bit differently. </p>
+<p>Instead of using just a single component, you’d first create another component that wraps the rendering part of this component inside a new Suspense Element. Then, as an attribute to the Suspense element, you'd pass a fallback attribute, and that attribute would get assigned to a fallback UI that gets displayed when the data the component is not available to render (meaning it has not been completely returned from an external source). </p>
+<p>Roughly, the code might now look something like this:</p>
+</div><div>
+<p>What's happening here, is the line of code <i>const specialPromiseResource = getSpecialPromiseTofetchCities()</i> is executed outside of our Suspense component, and it requests the data
