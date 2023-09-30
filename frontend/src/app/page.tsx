@@ -7,12 +7,16 @@ export default function Home() {
   const [metaphorQuery, setMetaphorQuery] = useState("");
   const [numResults, setNumResults] = useState(20);
   const [startPublishedDate, setStartPublishedDate] = useState("2021-01-01");
+  const [includeDomains, setIncludeDomains] = useState("");
 
   const fetchData = async () => {
+    const domainsArray = includeDomains.split(",");
+    console.log(domainsArray.length);
+    domainsArray.forEach((ele) => console.log(ele));
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:8000/api/internet-search?query=${metaphorQuery}&num_results=${numResults}&start_published_date=${startPublishedDate}`,
+        `http://localhost:8000/api/internet-search?query=${metaphorQuery}&num_results=${numResults}&start_published_date=${startPublishedDate}&include_domains=${domainsArray}`,
         {
           method: "GET",
           headers: {
@@ -32,6 +36,10 @@ export default function Home() {
       alert("Error occurred while sending the request");
     } finally {
       setLoading(false);
+      setMetaphorQuery("");
+      setIncludeDomains("");
+      setNumResults(20);
+      setStartPublishedDate("2021-01-01");
     }
   };
   return (
@@ -46,6 +54,7 @@ export default function Home() {
               type="text"
               placeholder="What are the recent blogs on react state management?"
               onChange={(e) => setMetaphorQuery(e.target.value)}
+              required
             />
           </label>
           <label className="flex gap-4 items-center">
@@ -71,7 +80,7 @@ export default function Home() {
             <input
               type="text"
               placeholder={"https://dev.to, https://www.medium.com"}
-              onChange={(e) => setStartPublishedDate(e.target.value)}
+              onChange={(e) => setIncludeDomains(e.target.value)}
             />
           </label>
           <button onClick={fetchData}>Submit</button>

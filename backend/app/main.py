@@ -2,7 +2,7 @@ import os
 import random
 import openai
 import shutil
-from typing import Union
+from typing import Optional
 from llama_index import (
     VectorStoreIndex,
     SimpleDirectoryReader,
@@ -141,7 +141,7 @@ async def get_internet_data(
     query: str,
     num_results: int = 20,
     start_published_date: str = "2021-01-01",
-    include_domains: Union[list[str], None] = None,
+    include_domains: str = None,
 ):
     global id_to_context_mapping
     global nodes
@@ -160,11 +160,19 @@ async def get_internet_data(
         ],
     )
 
+    domainsArray = []
+
+    if include_domains:
+        domainsArray = include_domains.split(",")
+
+    if len(domainsArray) == 0:
+        domainsArray = None
+
     metaphor_query = completion.choices[0].message.content
     search_response = metaphor.search(
         metaphor_query,
         use_autoprompt=True,
-        include_domains=include_domains,
+        include_domains=domainsArray,
         start_published_date=start_published_date,
         num_results=num_results,
     )
