@@ -1,0 +1,44 @@
+/* Loader.css */
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.loader {
+  width: 50px;
+  height: 50px;
+  animation: rotate 2s linear infinite;
+}
+
+.loader-circle {
+  fill: none;
+  stroke: #3498db; /* Blue color */
+  stroke-width: 5;
+  stroke-dasharray: 283; /* Circumference of a circle: 2 * π * radius */
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 283;
+  }
+  50% {
+    stroke-dashoffset: 70; /* A bit more than half the circumference to create the illusion of a growing circle */
+  }
+  100% {
+    stroke-dashoffset: 283;
+  }
+}
