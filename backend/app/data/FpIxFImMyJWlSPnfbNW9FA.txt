@@ -1,0 +1,76 @@
+State Management with RxJS and React<div><div>
+ <h3>
+ <a href="#introduction">
+ </a>
+ Introduction
+</h3>
+<p>Building big web apps can be tricky, especially when you have lots of different pieces of information to keep track of. But don't worry, RxJS is here to help! It's like a really cool tool that helps you manage all your data in one place.</p>
+<p>With RxJS, you can create these things called "streams of data" that different parts of your app can use. It's like a big river flowing through your app, keeping everything connected and in sync.</p>
+<p>In this article, we'll show you how to use RxJS to build web apps that are really easy to manage and work great. By the end of the article, you'll know how to use RxJS to manage all your data and build even bigger and better web apps!</p>
+<h3>
+ <a href="#why-rxjs-for-state-management-">
+ </a>
+ Why RxJS for State Management ?
+</h3>
+<p>Hey, do you ever get confused when you're building a big web app and you have lots of different pieces of information to keep track of? That's where RxJS comes in! It's like a really cool library that helps you manage all your data in one place.</p>
+<p>With RxJS, you can create streams of data that different parts of your app can use. It's kind of like a river flowing through your app, keeping everything connected and in sync.</p>
+<p>RxJS also helps you break down your app into smaller pieces, which is like having different rooms in your house for different stuff. That way, it's easier to keep everything organized and find what you need.</p>
+<p>Overall, RxJS is a great tool for managing data in big web apps. Whether you're building a simple app or a really big one, RxJS can help you keep everything under control!</p>
+<h3>
+ <a href="#a-todo-list-example">
+ </a>
+ A to-do list example
+</h3>
+<p>The easiest way to apply a new technology or a new proof of concept is to make a to-do list.</p>
+<p><strong>The Store:</strong><br />
+</p>
+<div>
+<pre><code>const subject = new Subject();
+const initialState: Task[] = [];
+let state = initialState;
+export const todoStore = {
+ init: () =&gt; {
+ subject.next(state);
+ },
+ subscribe: (setState: any) =&gt; {
+ subject.subscribe(setState);
+ },
+ addTask: (content: string) =&gt; {
+ const task = {
+ content,
+ id: uid(),
+ isDone: false,
+ };
+ state = [...state, task];
+ subject.next(state);
+ },
+ removeTask: (id: string) =&gt; {
+ const tasks = state.filter((task) =&gt; task.id !== id);
+ state = tasks;
+ subject.next(state);
+ },
+ completeTask: (id: string) =&gt; {
+ const tasks = state.map((task) =&gt; {
+ if (task.id === id) {
+ task.isDone = !task.isDone;
+ }
+ return task;
+ });
+ state = tasks;
+ subject.next(state);
+ },
+ initialState,
+};
+</code></pre>
+<div>
+<p>
+ Enter fullscreen mode
+ 
+ Exit fullscreen mode
+ 
+</p>
+</div>
+</div>
+<p>This code defines a simple store for managing a to-do list using RxJS. The store is implemented using a <code>Subject</code> and provides methods for adding, removing, and completing tasks.</p>
+<p>The <code>init</code> function initializes the store by publishing the current state to the subject using <code>subject.next(state)</code>. This function is typically called when the app is first loaded to ensure that the store is up to date.</p>
+<p>The <code>subscribe</code> function allows components to subscribe to changes in the store. When the store is updated, the <code>setState</code> function passed to <code>

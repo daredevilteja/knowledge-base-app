@@ -1,0 +1,50 @@
+Bad Habits of Mid-Level React Developers<div><div>
+ <p><a href="/srmagura"></a>
+ </p>
+ <div>
+ <p><a href="/srmagura">Sam Magura</a></p><p>
+ Posted on <time>Apr 9, 2022</time>
+ • Updated on <time>Apr 15, 2022</time>
+ </p>
+ </div>
+ </div><div>
+ <p>If you're a mid-level React developer looking to become an advanced React developer, this post is for you!</p>
+<p>I've been reviewing React code written by junior and mid-level developers on a daily basis for a couple of years now, and this post covers the most common mistakes I see. I'll be assuming you already know the basics of React and therefore won't be covering pitfalls like "don't mutate props or state". </p>
+<h2>
+ <a href="#bad-habits">
+ </a>
+ Bad Habits
+</h2>
+<p><strong>Each heading in this section is a bad habit that you should avoid!</strong></p>
+<p>I'll be using the classical example of a to-do list application to illustrate some of my points.</p>
+<h3>
+ <a href="#duplicating-state">
+ </a>
+ Duplicating state
+</h3>
+<p><strong>There should be a single source of truth for each piece of state.</strong> If the same piece of information is stored in state twice, the two pieces of state can get out of sync. You can try writing code that synchronizes the two pieces of state, but this is an error prone band-aid rather than a solution.</p>
+<p>Here's an example of duplicate state in the context of our to-do list app. We need to track the items on the to-do list as well as which ones have been checked off. You could store two arrays in state, with one array containing all of the to-dos and the other containing only the completed ones:<br />
+</p>
+<div>
+<pre><code>const [todos, setTodos] = useState&lt;Todo[]&gt;([])
+const [completedTodos, setCompletedTodos] = useState&lt;Todo[]&gt;([])
+</code></pre>
+<div>
+<p>
+ Enter fullscreen mode
+ 
+ Exit fullscreen mode
+ 
+</p>
+</div>
+</div>
+<p>But this code is buggy at worst and smelly at best! Completed to-dos are stored in the state twice, so if the user edits the text content of a to-do and you only call <code>setTodos</code>, <code>completedTodos</code> now contains the old text which is incorrect!</p>
+<p>There are a few ways to deduplicate your state. In this contrived example, you can simply add a <code>completed</code> boolean to the <code>Todo</code> type so that the <code>completedTodos</code> array is no longer necessary.</p>
+<h3>
+ <a href="#underutilizing-reducers">
+ </a>
+ Underutilizing reducers
+</h3>
+<p>React has two built-in ways to store state: <code>useState</code> and <code>useReducer</code>. There are also countless libraries for managing global state, with Redux being the most popular. Since Redux handles all state updates through reducers, I'll be using the term "reducer" to refer to both <code>useReducer</code> reducers and Redux reducers.</p>
+<p><code>useState</code> is perfectly fine when state updates are simple. For example, you can <code>useState</code> to track whether a checkbox is checked, or to track the <code>value</code> of a text input. </p>
+<p>That being said, <strong>when state updates become even slightly complex, you should be using a reducer.</strong> In particular, <strong>you should be using a reducer any time you are storing an array in state and the user can edit each item in the array.</strong> In the context of our to-do list app, you should definitely manage the array of to-

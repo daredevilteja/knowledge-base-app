@@ -1,0 +1,22 @@
+Complex State Management<div><article>
+ <header>
+ <p>
+ </p>
+ 
+ </header>
+ <div>
+ <h2>
+ <a href="#so-what-complicates-state-management">
+ </a>
+ <strong>So what complicates state management?</strong>
+</h2>
+<p>Nested objects created by model associations in your backend of course 🤓! </p>
+<p>It's been several weeks since I started building applications with React, and this last one got a little complicated. My latest project was constructed with a React frontend and a Ruby on Rails backend. Setting up the associations of the 3 models for the project wasn't too bad, but utilizing that information in the frontend proved to be quite a bit more challenging. I found myself in a constant sea of red error messages every time I submitted a form. Well, it turned out I really needed to backtrack and reinforce my understanding of basic state management before I could manage more complex updates. </p>
+<p>If your models are associated as have_many_through to support a many-to-many relationship, things can get a little quirky. Let's start with a seemingly simple example. So, we have a book club app. It has 3 models: user, book, and comment. The relationships are as follows:</p>
+<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--Yu2UMzDk--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cigkyq0dsdpyi5dm9ofr.png"></a></p>
+<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--LfSOfzF3--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/dzn7ak8gxbmvg2pi79cm.png"></a></p>
+<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--qe56YQnp--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9igvy9oi10a8355ymj9i.png"></a></p>
+<p>For this project, I used the useContext hook for the first time and it was wonderful! Passing props for a project this large would have driven me crazy. Happy I can add this skill to my newbie developer arsenal. So, here is my context for managing my books. I only wanted the user to have the ability to create new books so it's simple, but the context of the comments gets a bit more intricate.</p>
+<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--6HNWiat7--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8bnv3ut12v2msoadd1xv.png"></a></p>
+<p>The handleAddNewBook function is relatively straightforward. I use the spread operator on the books array to gain access, and then I insert my new book. Super simple. Now...because each user has their own books array created by the backend associations, I also need to update the user state. This is where my brain started malfunctioning so to speak. How do I accomplish such a thing? Those synapses were firing, but they sure weren't connecting until my instructor broke down what I needed to do. </p>
+<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--IJBXglK7--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.

@@ -1,0 +1,64 @@
+How the useState Hook Works<div><article>
+ <header>
+ <div>
+ <p><a href="/jonstodle"></a>
+ </p>
+ 
+ </div>
+ </header>
+ <div>
+ <p>I recently tried to explain to a friend how the <code>useState</code> hook works in React. I thought my analogy was quite a good one, so here goes!</p>
+<p>Imagine React has a large warehouse where it can store information you don't want to reset every time React updates the view. We'll call this warehouse <em>Central Storage</em>.</p>
+<p>To be able to store information in Central Storage, we'll have to reserve shelf space. We reserve shelf space by calling <code>useState</code>. <code>useState</code> takes a value which will be the default information stored in your shelf space.</p>
+<p><code>useState</code> returns an array with two items:</p>
+<ol>
+<li>A fresh <em>copy</em> of the information stored in your shelf space. We'll receive a fresh copy every time React updates the view.</li>
+<li>A function which let's us overwrite the information stored in your shelf space. To permanently change the information, which we receive a copy of in <em>1</em>, we have to call this function with the new information.</li>
+</ol>
+<p>Our code will look something like this:<br />
+</p>
+<div>
+<pre><code>
+const shelfSpace = useState("Hello World!");// ^ ^ ^ // | | | // ∟ Array containing a copy of the information stored in your shelf space, and a function to overwrite // the information stored in your shelf space // | | // ∟ "Reserve shelf space" // | // ∟ Store "Hello World!" in the shelf space when reserving the shelf spaceconst message = shelfSpace[0];// ^ ^ // | | // ∟ Store the copy of the information in your shelf space in a more conveniently named variable. It has a // name which better describe the information. // | // ∟ The copy of the information will always be the first item in the array returned by // useState. At index 0, in other wordsconst overwriteMessage = shelfSpace[1];// ^ ^ // | | // ∟ Store the function for overwriting the information in your shelf space in a more conveniently // named variable. It better describes what the function does. // | // ∟ The function for overwriting the information in your shelf space will always // be the second item in the array returned by useState. // At index 1, in other words
+</code></pre>
+<div>
+<p>
+ Enter fullscreen mode
+ 
+ Exit fullscreen mode
+ 
+</p>
+</div>
+</div>
+<p>We don't have to use three lines of code for every reservation i Central Storage. We can shorten it to this:<br />
+</p>
+<div>
+<pre><code>
+const [message, overwriteMessage] = useState("Hello World!");// ^ ^ // | | // ∟ "Unpack" the list returned by useState and store the first item in the array (index 0) // in a variable named `message` // | // ∟ Store the second item in the array (index 1) in a variable named `overwriteMessage`
+</code></pre>
+<div>
+<p>
+ Enter fullscreen mode
+ 
+ Exit fullscreen mode
+ 
+</p>
+</div>
+</div>
+<p>When making changes to our copy of the information we've received from Central Storage, those changes will not show up in your shelf space in Central Storage automatically. We have to explicitly ask for the information in your shelf space in Central Storage to be overwritten.</p>
+<p>Even if we update the variable <code>message</code> in your code...<br />
+</p>
+<div>
+<pre><code>
+const [message, overwriteMessage] = useState("Hello World!");message = "Hello Programming!";
+</code></pre>
+<div>
+<p>
+ Enter fullscreen mode
+ 
+ Exit fullscreen mode
+ 
+</p>
+</div>
+</div>
+<p>... it won't change the information in your shelf space in Central Storage. We've just modified our copy of the information. The

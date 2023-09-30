@@ -1,0 +1,50 @@
+How to manage state in a React app using Redux.<div><div>
+ <p>In this tutorial, you will manage the state of a React app using Redux. Redux helps you track and manage the state of an entire application in a single object instead of having the state and logic in a top-level component.</p>
+<p>You will build a to-do app that centralizes the state and logic using Redux.</p>
+<p>By the end of the tutorials you will know:</p>
+<ul>
+<li><p>What Redux is and the benefit of using Redux for state management.</p></li>
+<li><p>Understand and use Redux concepts such as the store, reducer, actions, etc. in a Todo app.</p></li>
+</ul>
+<p>The tutorial will be in two sections. The first section explains key concepts, the Redux architecture, and the basic usage of Redux. In the next section, we will build a Todo app using Redux for state management.</p>
+<h2>
+ <a href="#prerequisite">
+ </a>
+ Prerequisite
+</h2>
+<p>To get the most out of this tutorial you should be familiar with:</p>
+<ul>
+<li><p>Functions in JavaScript</p></li>
+<li><p>Knowledge of React terminology: State, JSX, Components, Props, and Hooks</p></li>
+<li><p>Building a basic React app</p></li>
+</ul>
+<h2>
+ <a href="#introduction-to-state-management">
+ </a>
+ Introduction to State Management
+</h2>
+<p>React enables developers to build complex user interfaces easily. To add interactivity to the UI, React components need access to data. The data can be a response from an API endpoint or defined within the app. This data will be updated in response to an interaction, such as when a user clicks on a button, or types into an input field.</p>
+<p>Inside a React component, the data is stored in an <code>object</code> called <code>state</code>. Whenever <code>state</code> changes, the component will re-render, and React will update the screen to display the new data as part of the UI.</p>
+<p>In a React app, multiple components may need access to the state. Hence, it needs to be effectively managed. <strong>Effective state management entails being able to store and update data in an application.</strong></p>
+<h2>
+ <a href="#what-is-redux">
+ </a>
+ What is Redux?
+</h2>
+<blockquote>
+<p><strong>Redux is a pattern and library for managing and updating application state, using events called "actions".</strong> It serves as a centralized store for state that needs to be used across your entire application, with rules ensuring that the state can only be updated in a predictable fashion.</p>
+</blockquote>
+<p>With Redux, you have a central store to keep, update, and monitor the state of your application. That means, our components may not have states. The state will be in a central location and can be accessed by multiple components in your application.</p>
+<h2>
+ <a href="#what-problem-does-redux-solve">
+ </a>
+ What problem does Redux solve?
+</h2>
+<p>A basic React app can be segmented into the following:</p>
+<ul>
+<li><p><strong>State</strong>: The current condition of the app</p></li>
+<li><p><strong>View</strong>: The UI of the app</p></li>
+<li><p><strong>Actions</strong>: A function that updates the state when an event occurs in your app (generally referred to as Event handlers).</p></li>
+</ul>
+<p>Every component in an app can have a state. However, it becomes a challenge if multiple components need access to the same data. To solve this issue, we "lift the state up". Lifting state up is a process where you move the state from a child component to its parent (top-level) component. With this approach, you can easily share state between multiple child components.</p>
+<p><a href="https://res.cloudinary.

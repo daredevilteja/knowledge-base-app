@@ -1,0 +1,64 @@
+React useState Hook in Action: What You Need to Know<div><div>
+ <p>The React useState hook is one of the most popular hooks in React. This hook makes it easy to manage state within your function components. It is also very simple to use. In this tutorial you will learn what useState hook is and how to use it in your React applications.</p>
+<h2>
+ <a href="#a-brief-introduction-to-react-hooks">
+ </a>
+ A brief introduction to React hooks
+</h2>
+<p>React hooks are feature introduced in React 16.8. Under the hood, hooks are functions. These functions allow you to work with component state and lifecycle. Both these things were previously possible only with classes. The introduction of hooks changed this, and made functional components much more powerful.</p>
+<h2>
+ <a href="#a-quick-introduction-to-react-usestate-hook">
+ </a>
+ A quick introduction to React useState hook
+</h2>
+<p>One of these hooks that come with React is also the useState hook. This hook focuses on one specific thing. It allows you to add state to your function components. This means that you no longer have to work with class components. You also no longer have to convert function components to classes just so you can use state.</p>
+<h2>
+ <a href="#getting-started-with-react-usestate">
+ </a>
+ Getting started with React useState
+</h2>
+<p>The first step to use useState hook is to declare it in your function component. Well, after you import it in your file where you want to use it. When you declare it, useState will return an array with two values. The first value is the actual state. Value allows you to read the current state.</p>
+<p>The second value is a function. This function allows you to update the state, or its value. Since it returns an array, there are two ways to declare this hook. First, you can use array indices. Second, you can use <a href="https://blog.alexdevero.com/destructuring-assignment-javascript/#destructuring-arrays">array destructuring</a>. The second approach is much more popular and you will see it very often.<br />
+</p>
+<div>
+<pre><code>// Create function component:
+function App() {
+ // Declare useState hook with destructuring:
+ // count: the current state (its value).
+ // setCount: function that allows update the state.
+ const [count, setCount] = useState()
+ return (
+ &lt;div&gt;
+ {/* ... */}
+ &lt;/div&gt;
+ )
+}
+// Create function component:
+function App() {
+ // Declare useState hook with array indices:
+ const countArray = useState()
+ const count = countArray[0] // The state.
+ const setCount = countArray[1] // The update function.
+ return (
+ &lt;div&gt;
+ {/* ... */}
+ &lt;/div&gt;
+ )
+}
+</code></pre>
+<div>
+<p>
+ Enter fullscreen mode
+ 
+ Exit fullscreen mode
+ 
+</p>
+</div>
+</div>
+<p>You can use any name for the state and the update function you want. In other words, the "count" and "setCount" can be anything you want. The only rule to remember is that it must be <a href="https://blog.alexdevero.com/javascript-variables-introduction/#naming-variables">valid variable name</a>. It is a good practice to start the name for the update function with "set". This is a preferred naming convention and you will see it very often.</p>
+<h2>
+ <a href="#creating-state-with-initial-value">
+ </a>
+ Creating state with initial value
+</h2>
+<p>The useState hook allows you set an initial value for every state you create. You can set this initial value by passing it as an argument to the useState hook when you declared it. This initial value can be any valid <a href="https://blog.alexdevero.com/javascript-basics-data-types-pt1/">data type</a>
