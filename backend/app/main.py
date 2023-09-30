@@ -109,7 +109,7 @@ async def get_internet_data(query: str):
 
     empty_directory("app/flash_storage")
     USER_QUESTION = query
-    SYSTEM_MESSAGE = "You are a helpful assistant that generates advanced queries based on user questions. Only generate one search query."
+    SYSTEM_MESSAGE = "You are a helpful assistant that generates advanced search queries based on user questions. Only generate one search query."
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
