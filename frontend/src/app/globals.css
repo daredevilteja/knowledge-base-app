@@ -4,6 +4,11 @@
 
 /* Loader.css */
 
+.activated {
+  background-color: #417ee6;
+  color: #f0f4f2;
+}
+
 input {
   border: 1px solid black;
   padding: 0.5rem 0.75rem;
