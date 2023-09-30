@@ -1,0 +1,56 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Logs and other temporary files
+*.log
+*.swp
+*.tmp
+
+# Local development environment files
+.vscode/
+.idea/
+*.pydevproject
+
+# Dependency directories
+lib/
+libs/
+lib64/
+dist/
+build/
+egg-info/
+bin/
+
+# Editor-specific files
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+*.komodotools
+*.kate-config
+*.project
+*.pycproject
+
+# macOS
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Compiled Python files
+*.pyc
+*.pyo
+
+# Type checking
+*.mypy_cache/
+
+# Coverage data
+.coverage
+htmlcov/
+
+# IDE settings
+*.code-workspace
