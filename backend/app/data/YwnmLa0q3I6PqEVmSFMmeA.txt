@@ -1,0 +1,58 @@
+React state management - useReducer vs Redux<div><div>
+ 
+<article>
+ <p>One of the core concepts of React library is state which is responsible for the UI changes.</p>
+<p>We have multiple solutions to manage state in the React library like useState, useReducer, useConetxt 
+and redux. Thanks to the vast &amp; growing React community.</p>
+<p>This particular blog talks about useReducer &amp; Redux. One is a hook 
+and the other is a state management library. Their definitions, use cases, code samples and when to choose what for efficient state management.</p>
+<h4>The useReducer hook</h4>
+<p><code>useReducer</code> is a hook used for state management. Typically, a React component can have the logic used to determine UI changes. 
+The state management logic, however, is a different issue that needs to be handled elsewhere.</p>
+<p>Otherwise, we wind up with state management 
+and rendering logic mixed together, which is challenging to comprehend, maintain, and test! with the huge UI components. 
+This is where <code>useReducer</code> hook comes in handy.</p>
+<p>To separate the concerns (rendering and state management) React provides the hook <code>useReducer()</code>. 
+The hook does so by extracting the state management out of the component.</p>
+<p>The <code>useReducer</code>(reducer, initialState, init?) hook accept 3 arguments:</p>
+<ul>
+ <li>Reducer function</li>
+ <li>Initial state</li>
+ <li>Initializer function</li>
+</ul>
+<p>The hook then returns an array of 2 items:</p>
+<ul>
+ <li>Current state</li>
+ <li>Dispatch function</li>
+</ul>
+<figure><pre><code> const [state, dispatch] = useReducer(reducer, initialArg, init?) </code></pre></figure>
+<p>Letâs build a counter with the help of the <code>useReducer</code> hook.
+following are features of the counter app.</p>
+<ul>
+ <li>Increment counter by 1</li>
+ <li>Decrement counter by 1</li>
+ <li>Reset counter value to initial value</li>
+ <li>Increment counter by 5</li>
+ <li>Decrement counter by 5</li>
+</ul>
+<ul>
+ <li><strong>initialState</strong> - It is the value the state is initialized with.</li>
+ <li><strong>action object</strong> - It is an object that describes how to update the state.</li>
+ <li><strong>dispatch</strong> - It is a special function that dispatches an action object</li>
+ <li><strong>reducer</strong> - It is a pure function that accepts 2 parameters: the current state and an action object. Depending on the action object, the reducer function must update the state in an immutable manner, 
+and return the new state.</li>
+</ul>
+<h4>Redux</h4>
+<p>On the other hand, Redux offers a comprehensive state management solution by centralising the applicationâs state in a single store with the help of actions 
+and reducers.</p>
+<p>Redux Toolkit simplifies the process by serving as an abstraction over redux. It hides the difficult parts, ensuring a good developer experience.</p>
+<p>Letâs build the above counter with the help of Redux Toolkit.</p>
+<h4>Thumb rules to decide when to use <code>useReducer</code> or <code>Redux</code></h4>
+<h5>Prefer useReducer if we have:</h5>
+<ul>
+ <li>Small to medium-sized applications with relatively simple state management needs</li>
+ <li>Applications that only need to manage local state within a component or a few components</li>
+</ul>
+<h5>Prefer Redux Toolkit if we have:</h5>
+<ul>
+ <li>Large-scale applications with complex state management needs. Redux is more

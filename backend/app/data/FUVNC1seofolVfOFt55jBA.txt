@@ -1,0 +1,29 @@
+React State Management Libraries and How to Choose<div><div>
+ <p>The idea of <em>state</em> is one of the trickier things to nail down when you’re starting with React, and as your app grows, so do your state management needs.</p>
+<p>In this post I’ll give you the Grand Tour of state management options in React and help you decide which one to use in your project.</p>
+<h2>What is State?</h2>
+<p>Just so we’re on the same page, let’s talk about <strong>state</strong> for a second.</p>
+<p>Every interactive app involves responding to events, like when the user clicks a button, and a sidebar closes. Or someone sends a message, and it appears in a chat window.</p>
+<p>As these events happen, and the app is updated to reflect them, we say the <em>state of the app</em> has changed. The app looks different than it did before, or it’s in a new mode behind the scenes.</p>
+<p>Things like, “whether the sidebar is open or closed” and “the messages in the chat box” are <em>pieces of state</em>. In programming terms, you’d probably have an <code>isSidebarOpen</code> variable somewhere in the app set to <code>true</code>, and a <code>chatMessages</code> array with the messages you’ve received.</p>
+<p>At any given moment, broadly speaking, the “state of your app” is determined by all of that data. All those individual variables, whether they’re stored in local component state or some third-party state management store – that’s your app’s state.</p>
+<p>This is the high-level concept of “app state”. We aren’t talking about React-specific stuff like <code>useState</code> or Context or Redux or anything yet.</p>
+<h2>What is State Management?</h2>
+<p>All of those variables that decide what state your app is in have to be stored somewhere. So state management is a broad term that combines <em>how you store the state</em> and <em>how you change it</em>.</p>
+<p>React and its ecosystem offer lots of different ways to store and manage that state. And when I say lots I mean LOTS.</p>
+<h3>Storing the Data</h3>
+<p>For storage, you can…</p>
+<ul>
+ <li>keep those variables in local component state – whether that’s with hooks (<code>useState</code> or <code>useReducer</code>) or in classes (<code>this.state</code> and <code>this.setState</code>)</li>
+ <li>keep the data in a store, using a third-party library like Redux, MobX, Recoil, or Zustand</li>
+ <li>you can even keep them on the <code>window</code> object globally</li>
+</ul>
+<p>React doesn’t care an ounce where you put the data, but…</p>
+<h3>Updating the Data and Re-rendering</h3>
+<p>To make your app interactive, you need a way for React to know that something changed, and that it should re-render some (or all) components on the page.</p>
+<p>Because React, despite its name, is not “reactive” in the way some other frameworks are.</p>
+<p>Some frameworks “watch” for things, and update accordingly. Angular, Svelte, and Vue do this, among others.</p>
+<p>React doesn’t, though. It does not “watch for changes” and magically re-render. You (or something) needs to tell it to do that.</p>
+<ul>
+ <li>with <code>useState</code>, <code>useReducer</code>, or <code>this.setState</code> (classes), React will re-render when you call one of the setter functions</li>
+ <li>if you keep the data in Redux, MobX, Recoil, or some other store, then that store will tell React when something has changed,

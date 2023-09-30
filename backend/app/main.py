@@ -2,6 +2,7 @@ import os
 import random
 import openai
 import shutil
+from typing import Union
 from llama_index import (
     VectorStoreIndex,
     SimpleDirectoryReader,
@@ -140,11 +141,7 @@ async def get_internet_data(
     query: str,
     num_results: int = 20,
     start_published_date: str = "2021-01-01",
-    include_domains: list = [
-        "https://hashnode.com/",
-        "https://medium.com/",
-        "https://dev.to/",
-    ],
+    include_domains: Union[list[str], None] = None,
 ):
     global id_to_context_mapping
     global nodes

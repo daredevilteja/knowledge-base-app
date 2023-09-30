@@ -1,0 +1,41 @@
+A Contemporary Guide on React State Patterns in 2021<div><div>
+ <article>
+	 
+ <div>
+ 
+ 
+ 
+<h4>Since the initial release of React in 2013, Facebook has rolled out a robust collection of tools to help developers with some of the minutiae of the web application development process, allowing them to focus on what matters most.</h4>
+<p>Despite React’s many capabilities and widespread adoption among developers, I’ve discovered that many of us face the same question: How can we handle complicated states with React? </p>
+<p>You may like: <strong><a href="https://mushfiqweb.com/crud-using-react-hooks-and-context-api/">Crud Using React Hooks and Context API</a></strong></p>
+<p>This post will look at what state is, how to arrange it, and alternative patterns to use as our applications become more complicated.</p>
+<h3>Understanding React State</h3>
+<p>React may be thought of as a blueprint in its most basic form. Your application will appear in a specific way depending on the status. React prefers declarative over imperative programming, a fancy way of stating that you express what you want to happen rather than the processes to get there. As a result, appropriately managing the state becomes critical, as the state determines how your program will act.</p>
+<div><figure></figure></div>
+<h3>React State in action</h3>
+<p>Before we get started, it’s a good idea to define what a state is. State, in my opinion, is a set of changeable values that change over time and directly impact component behavior.</p>
+<p>Props and state are extremely similar, except state may be updated inside the context of where it is created, whereas props received cannot be edited without supplying a callback function.</p>
+<p>Take a look at this:</p>
+<pre><code>const UserList = () =&gt; {
+ const [users, setUsers] = useState([])
+ useEffect(() =&gt; {
+ const getUsers = async () =&gt; {
+ const response = await fetch("https://myuserapi.com/users")
+ const users = await response.json()
+ setUsers(users)
+ }
+ getUsers()
+ }, [])
+ if (users.length &lt; 1) return null;
+ return &lt;ul&gt;
+ {users.map(user =&gt; &lt;li&gt;{user.name}&lt;/li&gt;)}
+ &lt;/ul&gt;
+}</code></pre>
+<p>When the component mounts, we fetch users from an API and update the users’ array after receiving a response. To keep the example simple, we use the naïve assumption that the call will always be successful.</p>
+<p>The state is being used to render list items with the user’s name, and it will return null if the array contains no users. The state varies over time and is used to control component behavior directly.</p>
+<p>It’s also worth noting that we’re using React’s built-in state management technique, the <code>useState</code> Hook. You may need to utilize React’s built-in Hook to handle your state, depending on the intricacy of your application and state management.</p>
+<p>The built-in state management mechanism isn’t always enough, as seen by the number of state management alternatives for React. It’s time to look at some of the reasons for this.</p>
+<h3>Understanding prop drilling</h3>
+<p>Let’s have a look at a little more complicated App. As your project grows, you’ll be pushed to add many levels of components to segregate concerns and/or improve readability. The issue arises when the state is required by various components located at various levels of the tree.</p>
+<figure></figure>
+<p>If we wanted to provide user data to both the <code>UserMenu</code> and <code>Profile</code> components, we had to put the state in <code>App</code> where it could be propagated down to each component that needed it. That means we’ll feed it via components like Dashboard and Settings

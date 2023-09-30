@@ -1,0 +1,21 @@
+Mastering State Management in Next.js<div><div>
+<p><strong>Summary (TL;DR)</strong>: In this article, we are going to explain how to manage state in Next.js by explaining what a state is, what state management entails and offer your a quick guide on state management through several methods, including React hooks, Context API, Redux and Data Fetching.</p>
+<figure></figure>
+<p>A “state” is a JavaScript object which allows us to manage data and which is used to represent information about a component’s value. State management is handling your application’s UI and dictating what users see and what data is stored.</p>
+<p>State management is a core aspect of any application. Understanding state management will help keep code centralized and performant. It is very integral to the point that there are dedicated hooks and open-source libraries made specifically to make it easier.</p>
+<p>This article will enable us to understand state and how to manage it in Next.js using <a href="https://www.commoninja.com/blog/tips-and-tricks-for-better-react-development">React hooks, Context API, Redux</a> and Data Fetching.</p>
+<p><strong><a href="https://www.commoninja.com/blog/react-18-news-and-features">While You Are at It, Why Not Learn More About The Newest Version of React – React 18</a></strong></p>
+<h2>Table of Contents</h2>
+<p><a href="#What-Is-State">What Is State?<br /></a><a href="#What-Is-State-Management">What Is State Management?<br /></a><a href="#A-Brief-Look-at-the-Nextjs-File-Structure">A Brief Look at the Next.js File Structure<br /></a><a href="#React-Hooks-for-Managing-State">React Hooks for Managing State<br /></a><a href="#Context-API-for-Complex-State">Context API for Complex State<br /></a><a href="#Redux">Redux<br /></a><a href="#Managing-the-State-With-Data-Fetching">Managing the State With Data Fetching</a></p>
+<h2>What Is State</h2>
+<p>A state is the internal value of a React component at any given point. It can contain various data types like arrays and objects. It can also be known as a dynamic store for managing application data. A state holds the current value of data. For example, a state can hold one value from a list of values coming from a server but might hold a different value when a button is clicked.</p>
+<h2>What Is State Management?</h2>
+<p>State management is the process of handling and maintaining knowledge of the state of an application. State management determines which data to show and how to show them as users interact with the application. This management usually handles the state of user interface control systems like input fields, CTA buttons, etc.</p>
+<p>Some benefits of state management include centralizing and easy maintenance of code, making data handling easy, reducing code size, and doing away with dead code.</p>
+<h2>A Brief Look at the Next.js File Structure</h2>
+<p>Understanding the file structure in a Next.js file enables a better understanding of the different ways to store and handle state. </p>
+<p>A new Next.js application consists of a pages, style and public folders. Inside the pages folder, which we will concentrate on in this article, we have two files: the index.js and the _app file, and an api folder. The _app file holds all globally accessible components, while the api folder contains the app’s API endpoint.</p>
+<h2>React Hooks for Managing State</h2>
+<p>Before introducing hooks in React V16.8, the state could only be accessed and managed using this.state variable, and the data type is always an object. The introduction of hooks took out the need for the this.state variable. </p>
+<p>Hooks are functions that allow you to use React features without the need for writing classes. They “hook” into lifecycle features and will enable you to reuse logic without affecting component hierarchy.</p>
+<p>This section

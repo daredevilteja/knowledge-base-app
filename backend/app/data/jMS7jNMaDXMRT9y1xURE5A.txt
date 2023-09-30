@@ -1,0 +1,41 @@
+ReactJS Software Design Pattern: State Machine<div><div><article><div><div><figure><a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F062687f1-5d56-4f46-901a-7adf94312288_417x360.jpeg"><div></div></a></figure></div><p>One of things I like about ReactJS is that it’s unopinionated - Apart from some anti-patterns, there isn’t really a right or wrong way to do things. While this grants you a lot of freedom, things can get messy fast if you don’t find a good way to structure your work.</p><p>I’m using ReactJS to develop the front-end for <a href="https://zkpay.me/">ZKPay</a>. I was finding it increasingly difficult to manage the application because of how many different states it could be in (e.g. SDK not initialized, SDK initialized, user not logged in, user logged in, no user associated with address, not synced to rollup, synced to rollup, awaiting user signature, signature rejected, signature accepted… etc).</p><p>I’m not an expert at ReactJS or software design patterns, I just wanted to pick something I knew how to use that would do the job.</p><p>I learned how to implement state machines during my game development days. I used it quite frequently, especially when implementing AI.</p><p>I love this pattern because it breaks up a complex apps into smaller, easier to manage actions. Not only does this make debugging a whole lot easier, it also improves long term velocity by allowing actions to be added, rearranged or split up when the requirements of your app change or get more complicated.</p><p>Alright, enough with the long-winded intro. Let’s get into implementation details…</p><p>To implement the state machine, you need 2 things:</p><ol><li><p>State definitions.</p></li><li><p>The “core” state machine function.</p></li></ol><p>This is just a list of states. For each state which your app can be in, add a definition. I like to keep things simple and use a constant:</p><pre><code>const State = {
+ RESET : 0,
+ INIT : 1,
+ ENTER_DEPOSIT_DETAILS: 2,
+ CREATE_PROOF : 3,
+ ALLOW_SIG_PENDING : 4,
+ ALLOW_SIG_REJECTED : 5,
+ DEPOSIT_SIG_PENDING : 6,
+ DEPOSIT_SIG_REJECTED : 7,
+ SEND_DEPOSIT : 8,
+ COMPLETE : 9,
+ ERROR_WAITING_FUNDS : 10
+};</code></pre><p>This is where all the magic happens.</p><p>I use a combination of React’s useEffect, a state variable and a case/switch statement to implement this:</p><pre><code>const [state, setState] = useState(State.INIT);
+useEffect(() =&gt; {
+ switch (state) {
+ case State.RESET:
+ {
+ // Do RESET things.
+ }
+ break;
+ case State.INIT:
+ {
+ // Do INIT things.
+ 
+ // When INIT is complete:
+ setState(State.ENTER_DEPOSIT_DETAILS);
+ }
+ break;
+ case State.ENTER_DEPOSIT_DETAILS:
+ {
+ // Wait for user to enter form details.
+ }
+ break;
+ case State.CREATE_PROOF:
+ {
+ // Create Aztec proof.
+ }
+ break;
+ // Etc....
+ }
+}, [state]); // Run this function every time the state changes</code></pre><p>A few implementation tips:</p><ul><li><p>The state machine will manage state for the component it’s implemented in and all child components. It makes the most sense to implement a state machine in some

@@ -1,0 +1,51 @@
+Derived state - Underrated Pro tip for simplifying React state management<div><article>
+ 
+ <figure>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</figure>
+<p>In my opinion, state management is the most challenging part of building and scaling web applications. I would even argue that developers mainly get paid to write sound state management machines. All the other parts can be outsourced or automated (and often are) using UI libraries and NPM packages.</p>
+<p>In this post, I want to cover a state management technique called “Derived state” which I think is underrated. In many cases, it can simplify your state management logic. The “Derived state” technique is library-agnostic, and you can apply it to Redux, MobX, and React’s built-in state management hooks.</p>
+<h2>What is the derived state?</h2>
+<p>The idea is to lean towards storing the least amount of data possible in your state. The way to go about it is to avoid storing state variables that you can derive or compute on the fly.</p>
+<p>Computing the variables rather than storing them in the state makes it easier to keep your data in sync when changes occur.</p>
+<h2>Example of derived state</h2>
+<p>Let take a look at an example. Say you have a song selector which consists of checkboxes for each song. Songs are also grouped by genre. We want to be able to select an individual song as well as the whole genre:<br />
+</p><figure>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</figure>
+<p>Now your first thought might be to create two state variables: one for storing selected songs selected and the other for genres. Seems simple enough, but is that the best way to go about it? Do we <em>really</em> need two variables for this?</p>
+<p>In this example, we can actually derive the value of genre checkboxes based on the value of individual song checkboxes. Here’s what it would look like:<br />
+</p><figure>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</figure>
+<p>The value of a genre checkbox is computed on the fly using <code>isGenreChecked</code> method and <code>songSelections</code> object. A genre is checked only when all the songs under it are selected. When users click on a genre checkbox all we need to do is select/deselect all of the items under that genre.</p>
+<h2>Why use this technique?</h2>
+<p>So why is this approach better? As I mentioned earlier, it’s much easier to keep our state in sync. The reason for it is that we have a single source of truth - our selected songs. Having a single state variable that you need to keep track of, while all other ones derived from it, simplifies the state mutation.</p>
+<p>For example, when unchecking a single song, we no longer need to worry about updating the state of its parent genre. On the new render, the app will recompute the state of the genre and automatically uncheck it.</p>
+<h2>Performance concerns</h2>
+<p>You may have performance concerns around recomputing the values of the state variables on each render. There might indeed be a performance overhead depending on the complexity of computation of the derived state.</p>
+<p>If there’s a noticeable performance regression, you can invest in optimizing your application. For example, you can wrap your computed value using the <a href="https://reactjs.org/docs/hooks-reference.html#usememo">
+ useMemo
+</a> hook to avoid recomputing the derived variable unless its underlying state has changed.</p>
+<h2>Conclusion</h2>
+<p>In this post, we covered a state management optimization technique called “Derived State.” “Derived State” helps you simplify your code by reducing the number of variables you need to store in your state.</p>
+<p>Next time you’re building a state management piece, you can consider using this technique and see whether certain state variables can be computed on the fly rather than stored in the state.</p>
+<p>If you’d like to get more web development, React and TypeScript tips consider <a href="https://twitter.

@@ -1,0 +1,43 @@
+Managing Data and State: React Hooks, Recoil and Apollo GraphQL Client<div><div><p>State and data management have proven to be complicated endeavors over time as React has evolved as a library. From the good old fashioned, built-in <code>setState</code> method of class based components, to a composition mindset brought to us by libraries like <a href="https://github.com/acdlite/recompose">Recompose</a> (remember that one?) - we've had enough to keep our plates full over the years... and then some. High-Order Components, render props, global state, actions, reducers, memoization, side effects... the list goes on and on when we take a trip down memory lane. All of this to accomplish one main thing - UI data and state management. React Hooks have standardized a bit of this, specifically when it comes to local state management. In this post, I'll illustrate some real world patterns I've established in building the new <a href="https://www.foo.software/">www.foo.software</a>.</p><h2>App Loading State with Custom React Hooks and Recoil</h2><p>I decided to establish an app level "loading" state as a dictionary-like data structure (example below). Each line represents a part of the app in a loading state. When all parts have completed loading, the object will be empty.</p><pre><code>{
+ "userFetch": "userFetch",
+ "someOtherDataFetch": "someOtherDataFetch"
+}</code></pre><p>With the above in mind, I created a Recoil "atom" to hold this "loading" piece of global state.</p><blockquote>An <strong>atom</strong> represents a piece of <strong>state</strong>. Atoms can be read from and written to from any component. Components that read the value of an atom are implicitly <strong>subscribed</strong> to that atom, so any atom updates will result in a re-render of all components subscribed to that atom</blockquote><p>~ <a href="https://recoiljs.org/docs/introduction/getting-started">Getting Started | Recoil</a></p><pre><code>// state/loadingState.ts
+import { atom } from 'recoil';
+export type LoadingCollectionType = Record&lt;string, string&gt;;
+export const loadingState = atom({
+ key: 'loadingState',
+ default: {} as LoadingCollectionType,
+});</code></pre><h3>Combining useEffect React Hook with useRecoilState</h3><p>Recoil offers many benefits - one being its compatibility and adoption of hooks. The library <a href="https://recoiljs.org/docs/api-reference/core/useRecoilState/">provides a <code>useRecoilState</code> hook</a> that is pretty robust in that it supports selectors (which I won't get into in this post). Below you can see how I use the hook to set and remove loading state based on <code>id</code> (being the <code>key</code> of the key / value pair collection encompassing my loading state).</p><pre><code>// state/useLoading.ts
+import { useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { loadingState } from './loadingState';
+export default function useLoading({
+ id,
+ shouldShowLoading,
+}: {
+ id: string;
+ shouldShowLoading: boolean;
+}) {
+ const setLoading = useSetRecoilState(loadingState);
+ useEffect(() =&gt; {
+ const removeLoadingState = () =&gt; {
+ setLoading((oldLoading) =&gt; {
+ const { [id]: _removed, ...updatedLoading } = oldLoading;
+ return updatedLoading;
+ });
+ };
+ if (shouldShowLoading) {
+ setLoading((oldLoading) =&gt; ({
+ ...oldLoading,
+ [id]: id,
+ }));
+ } else {
+ removeLoadingState();
+ }
+ // if component unmounts while in loading state,we need to make
+ // sure we cleanup with `useEffect` unsubscribe (end loading state)
+ return () =&gt; {
+ removeLoadingState();
+ };
+ }, [shouldShowLoading]);
+};</code></pre><p
