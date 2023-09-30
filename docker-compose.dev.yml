@@ -1,4 +1,4 @@
-version: "3"
+version: "3.5"
 
 services:
   frontend:
@@ -6,9 +6,6 @@ services:
     build:
       context: ./frontend
       dockerfile: dev.Dockerfile
-    environment:
-      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      METAPHOR_API_KEY: ${METAPHOR_API_KEY}
     volumes:
       - ./frontend:/app
     restart: always
@@ -22,6 +19,9 @@ services:
     build:
       context: ./backend
       dockerfile: dev.Dockerfile
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      METAPHOR_API_KEY: ${METAPHOR_API_KEY}
     volumes:
       - ./backend/app:/code/app
     restart: always

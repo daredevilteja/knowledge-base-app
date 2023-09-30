@@ -6,9 +6,6 @@ services:
     build:
       context: ./frontend
       dockerfile: prod-without-multistage.Dockerfile
-    environment:
-      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      METAPHOR_API_KEY: ${METAPHOR_API_KEY}
     volumes:
       - ./frontend:/app
     restart: always
@@ -22,6 +19,9 @@ services:
     build:
       context: ./backend
       dockerfile: prod.Dockerfile
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      METAPHOR_API_KEY: ${METAPHOR_API_KEY}
     volumes:
       - ./backend/app:/code/app
     restart: always
