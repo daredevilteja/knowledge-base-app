@@ -1,6 +1,6 @@
 # KNOWLEDGE BASE
 
-Knowledge Base is application where we can store relevant and reliable knowledge from the internet. Then we can ask questions and get relevant answers from the knowledge base with source url. This application helps all types of people be it developers, designers, engineers and many more. People can build their own custom knowledge base from the internet and use it as a agent to solve their queries.
+Knowledge Base is an application where we can store relevant and reliable knowledge from the internet. Then we can ask questions and get relevant answers from the knowledge base with source url. This application helps all types of people be it developers, designers, engineers and many more. People can build their own custom knowledge base from the internet and use it as a agent to solve their queries.
 
 ## Software Installation
 
@@ -13,7 +13,7 @@ Knowledge Base is application where we can store relevant and reliable knowledge
 1. Clone this repo into your system using git.
 2. **Open the .env file located in the repository and enter your openai-api-key and metaphor-api-key and save the file.**
 3. Open the terminal in the root folder of the repo and run `sudo docker-compose -f docker-compose.prod.yml up --build`(This will take around 5-10 mins on the first run and from consequent runs it will take less time).
-4. Wait till the both the frontend and backend servers start.(on first run wait for 10 mins and from subsequent runs wait for 2 mins)
+4. Wait till the both the frontend and backend servers start.(approx. wait times for first run is 10 mins and for subsequent runs is 2 mins)
 5. Open [http://localhost:3000](http://localhost:3000) in your browser and use the application.
 
 ## Usage
