@@ -4,6 +4,36 @@
 
 /* Loader.css */
 
+input {
+  border: 1px solid black;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+button {
+  padding: 0.5rem 0.75rem;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  border: 2px solid #3498db;
+  color: #3498db;
+  background-color: transparent;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+button:active {
+  background-color: #1abc9c;
+}
+
 .loader-container {
   display: flex;
   justify-content: center;

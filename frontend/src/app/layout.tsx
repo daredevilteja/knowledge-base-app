@@ -28,7 +28,7 @@ export default function RootLayout({
               <Link href={"/upload-knowledge"}>Load Data</Link>
               <Link href={"/retrieve-answers"}>Retrieve Answers</Link>
             </aside>
-            <section className="flex flex-col flex-8 px-4 py-6 gap-8">
+            <section className="flex flex-col flex-8 px-4 py-3 gap-8 bg-teal-100">
               {children}
             </section>
           </section>
