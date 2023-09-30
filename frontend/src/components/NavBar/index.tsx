@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 export default function NavBar() {
   const pathname = usePathname();
 
-  console.log(pathname);
   return (
     <aside className="flex flex-col flex-2 bg-lime-300 px-4 py-3 gap-6">
       <Link
